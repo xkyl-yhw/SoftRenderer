@@ -6,3 +6,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(Version1)
 add_subdirectory(Version1_1)
+add_subdirectory(Version1_2)
