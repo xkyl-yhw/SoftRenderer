@@ -98,11 +98,11 @@ struct Shader : public IShader {
         vec3 r = (n * (n * l * 2) - l).normalized();
         vec3 viewDir = (eye - varying_pos * bar).normalized();
         vec3 halfDir = (viewDir + l).normalized();
-        // float spec = std::pow(std::max(r.z, 0.), model->specular(uv)[0]);
-        float spec = std::pow(std::max(0., halfDir * n), model->specular(uv)[0]);
+        float spec = std::pow(std::max(r.z, 0.), model->specular(uv));
+        // float spec = std::pow(std::max(0., halfDir * n), model->specular(uv));
         float diff = std::max(0., n * l);
-        color = model->diffuse(uv) * diff;
-        for(int i = 0; i < 3; i++) color[i] = std::min(5. + color[i] * (diff + spec), 255.);
+        color = model->diffuse(uv);
+        for(int i = 0; i < 3; i++) color[i] = std::min(5. + color[i] * (diff + 0.6 * spec), 255.);
         return false; 
     }
 };
@@ -120,7 +120,7 @@ int main(int argc, char** argv){
     light_Dir.Normalized();
 
     TGAImage image(width, height, TGAImage::RGB);
-    TGAImage zbuffer(width, height, TGAImage::GRAYSCALE);
+    TGAImage zbuffer(width, height, TGAImage::RGB);
 
     Shader shader;
     shader.uniform_M = _projection * _view * _model;

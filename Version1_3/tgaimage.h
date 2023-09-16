@@ -23,7 +23,7 @@ struct TGAHeader {
 struct TGAColor {
     std::uint8_t bgra[4] = {0,0,0,0};
     std::uint8_t bytespp = 4;
-    TGAColor(std::uint8_t v = 0) : bgra{v, v, v, 255}, bytespp(1) { }
+    TGAColor(std::uint8_t v = 0) : bgra{0, 0, 0, 0}, bytespp(1) { bgra[0] = v; }
     TGAColor(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t a = 255) { bgra[0] = b; bgra[1] = g; bgra[2] = r; bgra[3] = a; }
     std::uint8_t& operator[](const int i) { return bgra[i]; }
     TGAColor operator *(float intensity) const {
