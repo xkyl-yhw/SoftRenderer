@@ -1,8 +1,8 @@
 #include "sdl_window_manager.h"
 
 SDLWindowManager* _manager = nullptr;
-const int width  = 400;
-const int height = 400;
+const int width  = 600;
+const int height = 600;
 
 int main(int argc, char** argv){
     

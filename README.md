@@ -7,7 +7,7 @@ QA From TinyRenderer&TinyRenderer问题汇总:https://www.cnblogs.com/xkyl/p/176
 - Version1_2 lesson5-6 各种Shader，视口变换，视口变换不是自动进行的。
 - Version1_3 lesson7 ShadowMapping 视口变换在光栅化进行 
 
-- Version2-1 采用SDL库，加入实时渲染窗口 将lesson6的内容在窗口中显示 目前10帧左右
+- Version2-1 采用SDL库，加入实时渲染窗口 将lesson6的内容在窗口中显示 600*600大小 目前5帧左右
     - 一开始一帧需要运行2.5s，优化思路主要针对在像素着色器多次渲染的运算进行优化 因为是单线程运行
     - 优化项：
         - 1. 重心坐标方程
