@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdint>
 #include <limits>
 #include <vector>
 #include <iostream>
@@ -53,7 +54,7 @@ void triangle(vec3 *pts, vec2* _uv, float* zbuffer, TGAImage &image, float inten
             {
                 zbuffer[int(P.x + P.y * width)] = z_interpolation;
                 TGAColor color = model->diffuse().get((uv.x * model->diffuse().width()), (uv.y * model->diffuse().height()));
-                image.set(P.x, P.y, TGAColor{color[0] * intensity, color[1] * intensity, color[2] * intensity, 255}); 
+                image.set(P.x, P.y, TGAColor{static_cast<uint8_t>(color[0] * intensity), static_cast<uint8_t>(color[1] * intensity), static_cast<uint8_t>(color[2] * intensity), 255}); 
             }
         } 
     } 
@@ -94,7 +95,7 @@ void triangle(vec3 t0, vec3 t1, vec3 t2, vec2 uv0, vec2 uv1, vec2 uv2, TGAImage 
             if (zbuffer[idx]<P.z) {
                 zbuffer[idx] = P.z;
                 TGAColor color = model->diffuse().get((uvP.x * model->diffuse().width()), (uvP.y * model->diffuse().height()));
-                image.set(P.x, P.y, TGAColor{color[0]*intensity, color[1]*intensity, color[2]*intensity});
+                image.set(P.x, P.y, TGAColor{static_cast<uint8_t>(color[0]*intensity), static_cast<uint8_t>(color[1]*intensity), static_cast<uint8_t>(color[2]*intensity)});
             }
         }
     }

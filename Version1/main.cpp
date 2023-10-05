@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <limits>
 #include <vector>
 #include "tgaimage.h"
@@ -115,7 +116,7 @@ void triangle(Vec3f *pts, Vec2i* _uv, float* zbuffer, TGAImage &image, float int
             {
                 zbuffer[int(P.x + P.y * width)] = z_interpolation;
                 TGAColor color = model->diffuse(uv);
-                image.set(P.x, P.y, TGAColor{color[0] * intensity, color[1] * intensity, color[2] * intensity, color[3] * intensity}); 
+                image.set(P.x, P.y, TGAColor{static_cast<uint8_t>(color[0] * intensity), static_cast<uint8_t>(color[1] * intensity), static_cast<uint8_t>(color[2] * intensity)}); 
             }
         } 
     } 
@@ -146,7 +147,7 @@ void triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, TGA
             if (zbuffer[idx]<P.z) {
                 zbuffer[idx] = P.z;
                 TGAColor color = model->diffuse(uvP);
-                image.set(P.x, P.y, TGAColor{color[0]*intensity, color[1]*intensity, color[2]*intensity});
+                image.set(P.x, P.y, TGAColor{static_cast<uint8_t>(color[0] * intensity), static_cast<uint8_t>(color[1] * intensity), static_cast<uint8_t>(color[2] * intensity)});
             }
         }
     }
