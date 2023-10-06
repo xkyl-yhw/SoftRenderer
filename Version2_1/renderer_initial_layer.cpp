@@ -1,6 +1,5 @@
 #include "renderer_initial_layer.h"
-#include <__msvc_chrono.hpp>
-#include <chrono>
+#include <iterator>
 
 const float depth = 2000.f;
 
@@ -22,19 +21,19 @@ RendererInitialLayer::~RendererInitialLayer()
 void RendererInitialLayer::initial()
 {
     model = std::make_unique<Model>("../../obj/african_head/african_head.obj");
-    for(int i = _width * _height; i--; zbuffer[i] = -std::numeric_limits<float>::max());
     lookAt(eye, center, up);
     viewportMat(_width / 8, _height / 8, _width * 3 / 4, _height * 3 / 4, depth);
     projectMat(-1.0f / (eye - center).norm());
-    light_Dir = proj<3>((_projection * _view * _model * embed<4>(light_Dir, 0.f))).normalized();
-
+    //light_Dir = proj<3>((_projection * _view * _model * embed<4>(light_Dir, 0.f))).normalized();
+    light_Dir.Normalized();
 }
 
 void RendererInitialLayer::drawScene(SDL_Renderer* renderer)
 {
     _shader.uniform_M = (_projection * _view * _model);
     _shader.uniform_MIT = _shader.uniform_M.invert_transpose();
-    auto begin = std::chrono::system_clock::now();
+    // for(int i = _width * _height; i--; zbuffer[i] = -std::numeric_limits<float>::max());
+    std::fill(zbuffer, zbuffer + _width * _height, -std::numeric_limits<float>::max());
     for(int i = 0; i < model->nfaces(); i++)
     {
         for(int j = 0; j < 3; j++)
@@ -43,11 +42,7 @@ void RendererInitialLayer::drawScene(SDL_Renderer* renderer)
         }
 
         triangle(_shader.varying_tri, _shader, renderer, zbuffer, _height, _width);
-
     }
-    auto end = std::chrono::system_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-    std::cout << duration.count() << std::endl;
 }
 
 vec4 RendererInitialLayer::PhongShader::vertex(int iface, int nthvert)

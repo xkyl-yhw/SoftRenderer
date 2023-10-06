@@ -20,12 +20,16 @@ public:
 
     bool running() { return isRunning; };
 
+    void refreshTitle(int ms);
+
 private:
     bool isRunning = false;
     SDL_Window* window;
     SDL_Renderer* renderer;
     RendererInitialLayer* _layer;
+    std::string _title;
     int _width, _height;
+    double _angle = 0;
 };
 
 #endif

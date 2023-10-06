@@ -1,4 +1,6 @@
 #include "sdl_window_manager.h"
+#include <SDL_timer.h>
+#include <SDL_video.h>
 
 SDLWindowManager* _manager = nullptr;
 const int width  = 600;
@@ -12,10 +14,12 @@ int main(int argc, char** argv){
 
     while (_manager->running()) 
     {
+        auto start = SDL_GetTicks();
         _manager->handleEvent();
         _manager->update();
         _manager->render();
-
+        auto time = SDL_GetTicks() - start;
+        _manager->refreshTitle(time);
     }
 
     _manager->clear();
